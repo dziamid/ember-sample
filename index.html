@@ -26,24 +26,20 @@
     <![endif]-->
 </head>
 <body>
-<script type="text/x-handlebars" data-template-name="custom">
-    Hello there!
-</script>
 
 <script type="text/x-handlebars">
-    {{#view App.MyView}}
-    <h1>Hello world!</h1>
-    {{/view}}
+    {{ App.actor.description }}
+    {{ App.singer.description }}
 
-    {{#view App.ButtonView class="oh-my"}}
-        Push me
-    {{/view}}
+    <h1>array</h1>
+    {{#each App.people}}
+        {{description}}
+    {{/each}}
 
-    {{#view App.InputView}}
-
-    {{/view}}
-
-    {{view App.CustomView }}
+    <h1>model array</h1>
+    {{#each App.people2}}
+        {{description}}
+    {{/each}}
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
@@ -52,6 +48,7 @@
 
 <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.6.1.min.js"%3E%3C/script%3E'))</script>
 <script src="js/libs/ember-0.9.5.js"></script>
+<script src="js/libs/ember-data-latest.js"></script>
 <script src="js/libs/twig.js"></script>
 <!--<script src="js/libs/ember-0.9.5.min.js"></script>-->
 <script src="js/app.js"></script>

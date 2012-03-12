@@ -1,61 +1,27 @@
+
 var App = Em.Application.create();
+App.store = DS.Store.create({});
 
-App.MyView = Em.View.extend({
-    mouseDown: function () {
-        window.alert("hello world!");
-    }
+App.Actor = DS.Model.extend({
+    age: DS.attr('string'),
+    name: DS.attr('string'),
+    description: function () {
+        return this.get('name') + ' is ' + this.get('age') + ' years old';
+    }.property('name', 'age')
+
 });
 
-App.ButtonView = Em.View.extend({
-    tagName: 'button',
-    didInsertElement: function () {
-        this.$().button();
-    }
-});
+App.set('actor', App.store.createRecord(App.Actor, {age: 50, name: 'Actor'}));
+App.set('singer', App.store.createRecord(App.Actor, {age: 45, name: 'Singer'}));
 
-App.Tags = [
-    "ActionScript",
-    "AppleScript",
-    "Asp",
-    "BASIC",
-    "C",
-    "C++",
-    "Clojure",
-    "COBOL",
-    "ColdFusion",
-    "Erlang",
-    "Fortran",
-    "Groovy",
-    "Haskell",
-    "Java",
-    "JavaScript",
-    "Lisp",
-    "Perl",
-    "PHP",
-    "Python",
-    "Ruby",
-    "Scala",
-    "Scheme"
-];
+App.set('people', Ember.ArrayProxy.create({
+    content: [ App.get('actor'), App.get('singer')]
+}));
 
-App.InputView = Em.View.extend({
-    tagName: 'input',
-    didInsertElement: function () {
-        this.$().autocomplete({
-            source: App.Tags
-        });
-    }
-});
+App.set('people2', DS.ModelArray.create({
+    type: App.Actor,
+    store: App.store,
+    content: [ App.get('actor'), App.get('singer')]
+}));
 
-App.CustomView = Em.View.extend({
-    templateName: 'custom-1',
-    value: 'Bla'
-});
 
-var twigTemplate1 = twig({
-    data: 'The {{ value }} is a lie.'
-});
-
-Ember.TEMPLATES["custom-1"] = function (context) {
-    return twigTemplate1.render(context);
-};
