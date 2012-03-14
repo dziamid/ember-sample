@@ -28,17 +28,8 @@
 <body>
 
 <script type="text/x-handlebars">
-    {{ App.actor.description }}
-    {{ App.singer.description }}
-
-    <h1>array</h1>
-    {{#each App.people}}
-        {{description}}
-    {{/each}}
-
-    <h1>model array</h1>
-    {{#each App.people2}}
-        {{description}}
+    {{#each App.People}}
+        {{desc}}
     {{/each}}
 </script>
 
