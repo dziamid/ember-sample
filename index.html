@@ -28,10 +28,11 @@
 <body>
 
 <script type="text/x-handlebars">
+    <h1>All people</h1>
     <ul>
         {{#each App.People}}
         <li>
-            {{id}}: {{desc}}
+            {{desc}}
         </li>
         {{/each}}
     </ul>
@@ -46,7 +47,7 @@
     <h1>Selected person</h1>
 
     {{#with App.SelectedPerson}}
-        {{id}}: {{desc}}
+        {{desc}}
     {{/with}}
 
 
