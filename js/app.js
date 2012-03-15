@@ -9,7 +9,12 @@ var App = Em.Application.create({
         //https://github.com/emberjs/data/pull/106
         //probably already fixed
         App.set('SelectedPerson', App.store.find(App.Person, 101));
-
+        App.get('SelectedPerson').reopen({
+            desc: function () {
+                console.log('Method specific for selected person');
+                return this.get('name') + ' is ' + this.get('age') + ' years old';
+            }.property('name', 'age')
+        });
     }
 });
 
@@ -54,6 +59,8 @@ App.set('OldPeople', Ember.ArrayProxy.create({
         return data.age > 49;
     }
 }));
+
+
 
 
 
