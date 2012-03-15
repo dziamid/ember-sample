@@ -28,9 +28,21 @@
 <body>
 
 <script type="text/x-handlebars">
-    {{#each App.People}}
-        {{desc}}
-    {{/each}}
+    <ul>
+        {{#each App.People}}
+        <li>
+            {{desc}}
+        </li>
+        {{/each}}
+    </ul>
+    <h1>Old people</h1>
+    <ul>
+        {{#each App.OldPeople}}
+        <li>
+            {{desc}}
+        </li>
+        {{/each}}
+    </ul>
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
