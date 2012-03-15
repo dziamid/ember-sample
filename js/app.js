@@ -4,6 +4,11 @@ var App = Em.Application.create({
         App.get('People').set('content', App.store.findAll(App.Person));
         App.store.createRecord(App.Person, {age: 50, name: 'Paul'});
         App.store.createRecord(App.Person, {age: 25, name: 'Paul'});
+        //if I move this outside of ready function, there's exception
+        //https://github.com/emberjs/data/pull/106
+        //probably already fixed
+        App.set('SelectedPerson', App.store.find(App.Person, 101));
+
     }
 });
 
@@ -16,14 +21,25 @@ App.Person = DS.Model.extend({
     name: DS.attr('string'),
     desc: function () {
         return this.get('name') + ' is ' + this.get('age') + ' years old';
-    }.property('name', 'age')
+    }.property('name', 'age'),
+    tasks: DS.hasMany('App.Task')
+});
 
+App.Task = DS.Model.extend({
+    title: DS.attr('string'),
+    assignedTo: DS.hasMany('App.Person')
 });
 
 App.Person.FIXTURES = [
-    {age: 26, name: 'Dziamid'},
-    {age: 30, name: 'Julia'},
-    {age: 18, name: 'Polina'}
+    {id: 101, age: 26, name: 'Dziamid', tasks: []},
+    {id: 102, age: 30, name: 'Julia', tasks: [201]},
+    {id: 103, age: 18, name: 'Polina', tasks: [202,203]}
+];
+
+App.Task.FIXTURES = [
+    {id: 201, title: 'Make a website'},
+    {id: 202, title: 'Repair a car'},
+    {id: 203, title: 'Make breakfast'}
 ];
 
 
@@ -34,4 +50,5 @@ App.set('People', Ember.ArrayProxy.create({
 App.set('OldPeople', App.store.filter(App.Person, function (data) {
     return data.age > 29;
 }));
+
 

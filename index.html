@@ -31,7 +31,7 @@
     <ul>
         {{#each App.People}}
         <li>
-            {{desc}}
+            {{id}}: {{desc}}
         </li>
         {{/each}}
     </ul>
@@ -43,6 +43,13 @@
         </li>
         {{/each}}
     </ul>
+    <h1>Selected person</h1>
+
+    {{#with App.SelectedPerson}}
+        {{id}}: {{desc}}
+    {{/with}}
+
+
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
