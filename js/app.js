@@ -5,21 +5,13 @@ var App = Em.Application.create({
         App.get('OldPeople').set('content', App.store.filter(App.Person, App.get('OldPeople').filterFunction));
         App.store.createRecord(App.Person, {age: 50, name: 'Paul'});
         App.store.createRecord(App.Person, {age: 25, name: 'Paul'});
-        //if I move this outside of ready function, there's exception
-        //https://github.com/emberjs/data/pull/106
-        //probably already fixed
-        App.set('SelectedPerson', App.store.find(App.Person, 101));
-        App.get('SelectedPerson').reopen({
-            desc: function () {
-                console.log('Method specific for selected person');
-                return this.get('name') + ' is ' + this.get('age') + ' years old';
-            }.property('name', 'age')
-        });
+
     }
 });
 
 App.store = DS.Store.create({
-    adapter: DS.fixtureAdapter
+    adapter: DS.fixtureAdapter,
+    revision: 3
 });
 
 App.Person = DS.Model.extend({
@@ -60,7 +52,13 @@ App.set('OldPeople', Ember.ArrayProxy.create({
     }
 }));
 
-
+App.set('SelectedPerson', App.store.find(App.Person, 101));
+App.get('SelectedPerson').reopen({
+    desc: function () {
+        console.log('Method specific for selected person');
+        return this.get('name') + ' is ' + this.get('age') + ' years old';
+    }.property('name', 'age')
+});
 
 
 
