@@ -6,6 +6,18 @@ var App = Em.Application.create({
         App.store.createRecord(App.Person, {age: 50, name: 'Paul'});
         App.store.createRecord(App.Person, {age: 25, name: 'Paul'});
 
+        App.set('SelectedPerson', App.store.find(App.Person, 103));
+        App.get('SelectedPerson').reopen({
+            desc: function () {
+                console.log('Method specific for selected person');
+                return this.get('name') + ' is ' + this.get('age') + ' years old';
+            }.property('name', 'age')
+        });
+
+        var task = App.store.createRecord(App.Task, { title: 'Play some pool!' });
+        var tasks = App.getPath('SelectedPerson.tasks');
+        tasks.pushObject(task);
+
     }
 });
 
@@ -52,13 +64,7 @@ App.set('OldPeople', Ember.ArrayProxy.create({
     }
 }));
 
-App.set('SelectedPerson', App.store.find(App.Person, 101));
-App.get('SelectedPerson').reopen({
-    desc: function () {
-        console.log('Method specific for selected person');
-        return this.get('name') + ' is ' + this.get('age') + ' years old';
-    }.property('name', 'age')
-});
+
 
 
 

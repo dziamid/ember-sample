@@ -48,6 +48,12 @@
 
     {{#with App.SelectedPerson}}
         {{desc}}
+        TODO:
+        {{#each tasks}}
+        <ul>
+            <li>{{title}}</li>
+        </ul>
+        {{/each}}
     {{/with}}
 
 
