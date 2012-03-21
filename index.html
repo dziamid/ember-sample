@@ -31,9 +31,11 @@
     <h1>All people</h1>
     <ul>
         {{#each App.People}}
-        <li>
-            {{desc}}
-        </li>
+            {{#view App.PersonView contentBinding="this"}}
+            <li>
+                {{content.desc}}
+            </li>
+            {{/view}}
         {{/each}}
     </ul>
     <h1>Old people</h1>

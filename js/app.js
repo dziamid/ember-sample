@@ -68,5 +68,12 @@ App.set('SelectedPerson', Em.Object.create({
     }
 }));
 
-
+App.PersonView = Em.View.extend({
+    content: null,
+    click: function () {
+        var person = this.get('content');
+        console.log('person ' + person.get('id') + ' clicked');
+        App.get('SelectedPerson').set('content', person);
+    }
+});
 
