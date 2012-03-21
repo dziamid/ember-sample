@@ -6,8 +6,6 @@ var App = Em.Application.create({
         App.store.createRecord(App.Person, {age: 50, name: 'Paul'});
         App.store.createRecord(App.Person, {age: 25, name: 'Paul'});
 
-        App.get('SelectedPerson').set('content', App.store.find(App.Person, 103));
-
         App.get('SelectedPerson').addTask(App.store.createRecord(App.Task, { title: 'Play some pool!' }));
 
     }
@@ -61,14 +59,14 @@ App.set('OldPeople', Ember.ArrayProxy.create({
 
 //TODO: move this to ObjectProxy when it is merged
 App.set('SelectedPerson', Em.Object.create({
-    content: [],
+    content: null,
     desc: function () {
         return this.getPath('content.name') + ' is ' + this.getPath('content.age') + ' years old';
     }.property('content.name', 'content.age'),
     //proxy method
     addTask: function (task) {
         console.log('Adding a task for selected person');
-        return this.get('content').addTask(task);
+        return this.get('content') && this.get('content').addTask(task);
     }
 }));
 
@@ -81,3 +79,10 @@ App.PersonView = Em.View.extend({
     }
 });
 
+App.SelectedPersonView = Em.View.extend({
+    contentBinding: 'App.SelectedPerson.content',
+    classNameBindings: ['isSelected'],
+    isSelected: function () {
+        return this.get('content') !== null;
+    }.property('content')
+});

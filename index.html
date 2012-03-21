@@ -46,9 +46,11 @@
         </li>
         {{/each}}
     </ul>
+
+    {{#view App.SelectedPersonView}}
     <h1>Selected person</h1>
 
-    {{#with App.SelectedPerson.content}}
+    {{#with content}}
         {{desc}}
         TODO:
         {{#each tasks}}
@@ -57,7 +59,7 @@
         </ul>
         {{/each}}
     {{/with}}
-
+    {{/view}}
 
 </script>
 
