@@ -24,7 +24,10 @@ App.Person = DS.Model.extend({
     desc: function () {
         return this.get('name') + ' is ' + this.get('age') + ' years old';
     }.property('name', 'age'),
-    tasks: DS.hasMany('App.Task')
+    tasks: DS.hasMany('App.Task'),
+    addTask: function (task) {
+        this.get('tasks').pushObject(task);
+    }
 });
 
 App.Task = DS.Model.extend({
@@ -62,9 +65,10 @@ App.set('SelectedPerson', Em.Object.create({
     desc: function () {
         return this.getPath('content.name') + ' is ' + this.getPath('content.age') + ' years old';
     }.property('content.name', 'content.age'),
+    //proxy method
     addTask: function (task) {
         console.log('Adding a task for selected person');
-        return this.getPath('content.tasks').pushObject(task);
+        return this.get('content').addTask(task);
     }
 }));
 
