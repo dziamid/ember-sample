@@ -6,17 +6,9 @@ var App = Em.Application.create({
         App.store.createRecord(App.Person, {age: 50, name: 'Paul'});
         App.store.createRecord(App.Person, {age: 25, name: 'Paul'});
 
-        App.set('SelectedPerson', App.store.find(App.Person, 103));
-        App.get('SelectedPerson').reopen({
-            desc: function () {
-                console.log('Method specific for selected person');
-                return this.get('name') + ' is ' + this.get('age') + ' years old';
-            }.property('name', 'age')
-        });
+        App.get('SelectedPerson').set('content', App.store.find(App.Person, 103));
 
-        var task = App.store.createRecord(App.Task, { title: 'Play some pool!' });
-        var tasks = App.getPath('SelectedPerson.tasks');
-        tasks.pushObject(task);
+        App.get('SelectedPerson').addTask(App.store.createRecord(App.Task, { title: 'Play some pool!' }));
 
     }
 });
@@ -64,7 +56,17 @@ App.set('OldPeople', Ember.ArrayProxy.create({
     }
 }));
 
-
+//TODO: move this to ObjectProxy when it is merged
+App.set('SelectedPerson', Em.Object.create({
+    content: [],
+    desc: function () {
+        return this.getPath('content.name') + ' is ' + this.getPath('content.age') + ' years old';
+    }.property('content.name', 'content.age'),
+    addTask: function (task) {
+        console.log('Adding a task for selected person');
+        return this.getPath('content.tasks').pushObject(task);
+    }
+}));
 
 
 
