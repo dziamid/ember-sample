@@ -52,7 +52,7 @@ App.set('People', Ember.ArrayProxy.create({
 App.set('OldPeople', Ember.ArrayProxy.create({
     content: [],
     filterFunction: function (data) {
-        return data.age > 49;
+        return data.get('age') > 49;
     }
 }));
 
